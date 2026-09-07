@@ -27,7 +27,7 @@ practica1/
 └── curva_binaria_P4.pbm
 ```
 
-## 📝 Descripción del Proyecto
+## Descripción del Proyecto
 
 Esta práctica consiste en resolver un mismo problema matemático utilizando dos paradigmas de programación distintos: **Programación Funcional (Haskell)** y **Programación Lógica (Prolog)**.
 
