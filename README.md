@@ -97,3 +97,6 @@ donde hᵢ es la altura de la curva en cada columna.
 Para el archivo suministrado **curva_binaria_P4.pbm**, se obtuvo:
 
 Área = 108660 píxeles cuadrados.
+
+<img width="781" height="449" alt="image" src="https://github.com/user-attachments/assets/2d92ae46-fc54-44a7-828f-629cf3fc62bd" />
+
