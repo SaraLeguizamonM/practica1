@@ -140,7 +140,7 @@ main :-
     current_prolog_flag(argv, Argv),
     ( Argv = [Path|_]
     -> main(Path)
-    ;  format(user_error, "Uso: swipl area.pl <archivo.pbm>~n", []),
+    ;  format(user_error, "Uso: swipl area_curva.pl <archivo.pbm>~n", []),
        halt(1)
     ).
 
