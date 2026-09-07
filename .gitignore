@@ -1,0 +1,19 @@
+# Archivos generados por GHC
+*.exe
+*.o
+*.hi
+
+# Archivo generado por el programa Haskell
+alturas.txt
+
+# Archivos temporales de Haskell
+*.dyn_hi
+*.dyn_o
+
+# Carpetas de compilación comunes
+dist/
+dist-newstyle/
+.stack-work/
+
+# Configuración local de VS Code
+.vscode/
