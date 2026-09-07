@@ -39,6 +39,9 @@ ghc Haskell\Main.hs -o Haskell\Main.exe
 
 Esto genera el ejecutable `Main.exe` dentro de la carpeta `Haskell`.
 
+Imagen de la curva
+<img width="781" height="449" alt="image" src="https://github.com/user-attachments/assets/2d92ae46-fc54-44a7-828f-629cf3fc62bd" />
+
 ### Ejecución
 
 Una vez compilado, ejecutar:
@@ -48,6 +51,10 @@ Una vez compilado, ejecutar:
 ```
 
 El programa utiliza el archivo `curva_binaria_P4.pbm` ubicado en la carpeta raíz del proyecto. También genera el archivo `alturas.txt` con el vector de alturas obtenido a partir de la imagen.
+
+Imagen de la curva
+<img width="921" height="644" alt="image" src="https://github.com/user-attachments/assets/93a33c38-660e-4bbb-87d0-a90cadae9e63" />
+
 
 ## Solución en Prolog
 
@@ -98,5 +105,7 @@ Para el archivo suministrado **curva_binaria_P4.pbm**, se obtuvo:
 
 Área = 108660 píxeles cuadrados.
 
-<img width="781" height="449" alt="image" src="https://github.com/user-attachments/assets/2d92ae46-fc54-44a7-828f-629cf3fc62bd" />
+
+
+
 
