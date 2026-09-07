@@ -27,6 +27,21 @@ practica1/
 └── curva_binaria_P4.pbm
 ```
 
+## 📝 Descripción del Proyecto
+
+Esta práctica consiste en resolver un mismo problema matemático utilizando dos paradigmas de programación distintos: **Programación Funcional (Haskell)** y **Programación Lógica (Prolog)**.
+
+El objetivo principal es leer e interpretar una imagen binaria en formato **PBM P4** (`curva_binaria_P4.pbm`) para calcular el **área bajo la curva** mediante una **Suma de Riemann de forma discreta**. 
+
+### Fundamentación Matemática y Algorítmica
+1. **Interpretación de la imagen:** Para cada posición horizontal $x$, el programa inspecciona la columna correspondiente de abajo hacia arriba y cuenta los píxeles negros consecutivos. Este conteo define el valor de la función discreta $f(x)$ (altura de la curva en $x$).
+2. **Estructura de Alturas:** Se construye un vector o lista de alturas $M = [f(0), f(1), f(2), ..., f(n-1)]$.
+3. **Suma de Riemann:** Asumiendo que el ancho de cada columna es $\Delta x = 1$ píxel, el área total $A$ en píxeles cuadrados equivale a la suma directa de las alturas:
+   $$A = \sum_{x=0}^{n-1} f(x)$$
+4. **Visualización en Consola:** Dado que las dimensiones de la imagen original superan el tamaño estándar de una ventana de terminal, se implementó una estrategia de escalado/muestreo para generar una representación compacta de la curva en texto sin perder su forma general.
+
+*Ambas soluciones obtienen el mismo valor exacto de área, demostrando cómo dos paradigmas conceptualmente opuestos convergen en el mismo resultado computacional.*
+
 ## Solución en Haskell
 
 ### Compilación
