@@ -27,6 +27,14 @@ practica1/
 └── curva_binaria_P4.pbm
 ```
 
+## Descripción del Proyecto
+
+Esta práctica consiste en resolver un mismo problema matemático utilizando dos paradigmas de programación distintos: **Programación Funcional (Haskell)** y **Programación Lógica (Prolog)**.
+
+El objetivo principal es leer e interpretar una imagen binaria en formato **PBM P4** (`curva_binaria_P4.pbm`) para calcular el **área bajo la curva** mediante una **Suma de Riemann de forma discreta**. 
+
+*Ambas soluciones obtienen el mismo valor exacto de área, demostrando cómo dos paradigmas conceptualmente opuestos convergen en el mismo resultado computacional.*
+
 ## Solución en Haskell
 
 ### Compilación
@@ -49,6 +57,10 @@ Una vez compilado, ejecutar:
 
 El programa utiliza el archivo `curva_binaria_P4.pbm` ubicado en la carpeta raíz del proyecto. También genera el archivo `alturas.txt` con el vector de alturas obtenido a partir de la imagen.
 
+Imagen de la curva
+
+<img width="781" height="449" alt="image" src="https://github.com/user-attachments/assets/2d92ae46-fc54-44a7-828f-629cf3fc62bd" />
+
 ## Solución en Prolog
 
 La solución utiliza SWI-Prolog.
@@ -64,6 +76,10 @@ También se puede ejecutar utilizando directamente la ruta de instalación de SW
 ```powershell
 & "C:\Program Files\swipl\bin\swipl.exe" Prolog\area_curva.pl -- curva_binaria_P4.pbm
 ```
+
+Imagen de la curva
+
+<img width="921" height="644" alt="image" src="https://github.com/user-attachments/assets/93a33c38-660e-4bbb-87d0-a90cadae9e63" />
 
 ## Estrategia para mostrar la imagen grande en la consola
 
@@ -97,3 +113,8 @@ donde hᵢ es la altura de la curva en cada columna.
 Para el archivo suministrado **curva_binaria_P4.pbm**, se obtuvo:
 
 Área = 108660 píxeles cuadrados.
+
+
+
+
+
