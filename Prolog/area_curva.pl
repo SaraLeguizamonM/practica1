@@ -12,23 +12,25 @@
 
 
 read_pbm(Path, Width, Height, Bytes) :-
-    read_file_to_codes(Path, Codes, [encoding(octet)]),
-    append("P4", Rest0, Codes),
-    skip_ws(Rest0, Rest1),
-    read_number(Rest1, Width, Rest2),
-    skip_ws(Rest2, Rest3),
-    read_number(Rest3, Height, Rest4),
-    Rest4 = [_UnEspacio | Bytes].   % un solo separador antes del binario
+    read_file_to_codes(Path, Codes, [encoding(octet)]),  % lectura binaria
+    append("P4", Rest0, Codes),   % verificar encabezado (P4)
+    skip_ws(Rest0, Rest1),   % saltar espacios en blanco
+    read_number(Rest1, Width, Rest2),    % leer ancho
+    skip_ws(Rest2, Rest3),   % saltar espacios en blanco
+    read_number(Rest3, Height, Rest4),   % leer alto
+    Rest4 = [_UnEspacio | Bytes].   % vuelve a separar antes de pasar binarios crudos
 
-
+% Saltar espacios en blanco y comentarios (que empiezan con #) en el encabezado del archivo PBM
 skip_ws([C|Cs], Out) :- code_type(C, space), !, skip_ws(Cs, Out).
 skip_ws([0'#|Cs], Out) :- !, skip_comentario(Cs, Cs1), skip_ws(Cs1, Out).
 skip_ws(Cs, Cs).
 
-skip_comentario([0'\n|Cs], Cs) :- !.
+% Saltar comentarios (que empiezan con #) hasta el final de la linea
+skip_comentario([0'\n|Cs], Cs) :- !. 
 skip_comentario([_|Cs], Out) :- !, skip_comentario(Cs, Out).
 skip_comentario([], []).
 
+% Leer un numero decimal de la lista de codigos, devolviendo el numero y el resto de la lista
 read_number(Cs, Number, Rest) :-
     read_digits(Cs, Digits, Rest),
     Digits \== [],
@@ -39,12 +41,12 @@ read_digits(Cs, [], Cs).
 
 % Acceder a un pixel individual (X, Y)
 
-pixel(X, Y, Width, Bytes, Bit) :-
-    BytesPorFila is (Width + 7) // 8,
-    IndiceByte is Y * BytesPorFila + (X // 8),
-    nth0(IndiceByte, Bytes, Byte),
-    PosBit is 7 - (X mod 8),
-    Bit is (Byte >> PosBit) /\ 1.
+pixel(X, Y, Width, Bytes, Bit) :-   % X >= 0, Y >= 0, X < Width,
+    BytesPorFila is (Width + 7) // 8,  % redondeo hacia arriba
+    IndiceByte is Y * BytesPorFila + (X // 8),  % calcular el indice del byte que contiene el pixel (X, Y)
+    nth0(IndiceByte, Bytes, Byte),  % obtener el byte correspondiente
+    PosBit is 7 - (X mod 8),  % calcular la posicion del bit dentro del byte 
+    Bit is (Byte >> PosBit) /\ 1.  % extraer el bit correspondiente (1 = negro, 0 = blanco)
 
 % La funcion discreta f(X) se define como la altura de la columna X, es decir, cuantos pixeles negros
 
