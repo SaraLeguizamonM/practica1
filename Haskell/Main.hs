@@ -1,10 +1,15 @@
+-- Módulo principal para análisis de imágenes PBM binarias (P4).
+-- Lee la cabecera del archivo, procesa el mapa de bits a nivel de byte para
+-- calcular la función de altura f(x) y exporta los resultados.
 module Main where
 
+-- Módulos para manipulación eficiente de datos binarios y operaciones a nivel de bit
 import qualified Data.ByteString as B
 import Data.Char (isSpace)
 import Data.Word (Word8)
 import Data.Bits (testBit)
 
+-- Alias de tipos para mejorar la legibilidad y semántica del dominio del problema
 type Ancho = Int
 type Alto = Int
 type Altura = Int
