@@ -73,15 +73,15 @@ extraerAlturas ancho alto bytes = [ buscarAlturaEnColumna x | x <- [0 .. ancho -
   where
     buscarAlturaEnColumna :: Int -> Altura
     buscarAlturaEnColumna x =
-  let -- 1. Secuencia de índices y descendente desde la última fila (alto - 1) hasta el tope (0)
-      filasDesdeAbajo = [alto - 1, alto - 2 .. 0]
-      
+      let -- 1. Secuencia de índices y descendente desde la última fila (alto - 1) hasta el tope (0)
+          filasDesdeAbajo = [alto - 1, alto - 2 .. 0]
+          
           -- 2. Evaluación de estado activo (negro) del píxel
           esNegro y = pixelEn ancho bytes x y
           
           -- 3. Acumulación contigua desde la base usando Lazy Evaluation
           pixelesConsecutivos = takeWhile esNegro filasDesdeAbajo
-
+          
       -- 4. Longitud equivalente a la altura f(x)
       in length pixelesConsecutivos
 
