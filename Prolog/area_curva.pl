@@ -25,7 +25,7 @@ skip_ws([C|Cs], Out) :- code_type(C, space), !, skip_ws(Cs, Out).
 skip_ws([0'#|Cs], Out) :- !, skip_comentario(Cs, Cs1), skip_ws(Cs1, Out).
 skip_ws(Cs, Cs).
 
-% Saltar comentarios (que empiezan con #) hasta el final de la linea
+% Saltar comentarios (que empiezan con #) hasta el final de la linea 
 skip_comentario([0'\n|Cs], Cs) :- !. 
 skip_comentario([_|Cs], Out) :- !, skip_comentario(Cs, Out).
 skip_comentario([], []).
@@ -48,13 +48,15 @@ pixel(X, Y, Width, Bytes, Bit) :-   % X >= 0, Y >= 0, X < Width,
     PosBit is 7 - (X mod 8),  % calcular la posicion del bit dentro del byte 
     Bit is (Byte >> PosBit) /\ 1.  % extraer el bit correspondiente (1 = negro, 0 = blanco)
 
-% La funcion discreta f(X) se define como la altura de la columna X, es decir, cuantos pixeles negros
 
-f(X, Width, Height, Bytes, Alto) :-
-    FilaInferior is Height - 1,
+% La funcion discreta f(X) se define como la altura de la columna X
+
+f(X, Width, Height, Bytes, Alto) :-  
+    FilaInferior is Height - 1,  
     altura_desde(X, FilaInferior, Width, Bytes, Alto).
 
-
+% Calcular la altura de la columna X desde una fila específica hacia arriba
+% Si es si, es 1 = negro y si es no seria 0 = blanco
 altura_desde(_, Fila, _, _, 0) :- Fila < 0, !.
 altura_desde(X, Fila, Width, Bytes, Cuenta) :-
     pixel(X, Fila, Width, Bytes, Bit),
@@ -65,11 +67,11 @@ altura_desde(X, Fila, Width, Bytes, Cuenta) :-
     ;  Cuenta = 0
     ).
 
-% Construir M de forma declarativa
+% Construir M (todo el dominio de la funcion f) y se calcula el area bajo la curva
 
-alturas(Width, Height, Bytes, M) :-
+alturas(Width, Height, Bytes, M) :- 
     MaxX is Width - 1,
-    findall(Alto,
+    findall(Alto, 
             ( between(0, MaxX, X),
               f(X, Width, Height, Bytes, Alto) ),
             M).
@@ -82,20 +84,21 @@ area(M, Area) :- sum_list(M, Area).
 
 % Se dibuja directamente sobre el vector de alturas M -- el mismo
 % que ya se uso para calcular el area
+% Se hace un muestreo, donde se reduce las filas y columnas con las mas representativas
 
-dibujar_curva_consola(M, AltoOriginal) :-
+dibujar_curva_consola(M, AltoOriginal) :- 
     length(M, AnchoOriginal),
     AnchoConsola = 80, AltoConsola = 20,
     UltCol is AnchoConsola - 1,
-    findall(Alto,
+    findall(Alto, 
         ( between(0, UltCol, I),
           Idx is (I * AnchoOriginal) // AnchoConsola,
           nth0(Idx, M, Alto) ),
         AlturasReducidas),
     write('REPRESENTACION DE LA CURVA EN CONSOLA'), nl,
     imprimir_borde(AnchoConsola),
-    forall(between(0, AltoConsola, DesdeArriba),
-        ( Y is AltoConsola - DesdeArriba,
+    forall(between(0, AltoConsola, DesdeArriba), % a diferencia de findall, este no acumula resultados
+        ( Y is AltoConsola - DesdeArriba, %  sino que ejecuta la accion para cada valor, (imprimir en pantalla)
           forall(member(H, AlturasReducidas),
                  pintar_celda(H, AltoOriginal, AltoConsola, Y)),
           nl )),
@@ -112,7 +115,9 @@ pintar_celda(H, AltoOriginal, AltoConsola, Y) :-
     EscalaY is (H * AltoConsola) // AltoOriginal,
     ( EscalaY >= Y -> write('█') ; write(' ') ).
 
-% Valores de muestra x_i -> f(x_i)
+% Valores de muestra x_i -> f(x_i) 
+% calcula un tamaño de salto para tomar aproximadamente 
+% 10 muestras distribuidas uniformemente a lo largo de las N columnas.
 
 mostrar_muestras(M) :-
     length(M, N),
@@ -125,8 +130,7 @@ mostrar_muestras(M) :-
            format("x_~w = ~w -> f(x_~w) = ~w pixeles~n", [I, X, I, Alto])).
 
 
-% Main path
-
+% Main que procesa el archivo PBM, calcula el area bajo la curva y dibuja la curva en consola
 main(Path) :-
     read_pbm(Path, Width, Height, Bytes),
     format("Imagen: ~w x ~w pixeles~n", [Width, Height]),
@@ -136,8 +140,7 @@ main(Path) :-
     nl, dibujar_curva_consola(M, Height),
     mostrar_muestras(M).
 
-
-% Main principal
+% Main que procesa los argumentos de la linea de comandos
 main :-
     current_prolog_flag(argv, Argv),
     ( Argv = [Path|_]
